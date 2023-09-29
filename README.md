@@ -4,6 +4,12 @@ This module creates a LibVirt domain (instances) using Terraform.
 
 - [Terraform LibVirt Module](#terraform-libvirt-module)
   - [Usage](#usage)
+  - [Requirements](#requirements)
+  - [Providers](#providers)
+  - [Modules](#modules)
+  - [Resources](#resources)
+  - [Inputs](#inputs)
+  - [Outputs](#outputs)
   - [Examples](#examples)
   - [Dependencies](#dependencies)
   - [Authors](#authors)
@@ -86,7 +92,7 @@ You can find an example [here](examples/) of how to use this module.
 
 ## Dependencies
 
-- [Terraform](https://www.terraform.io/downloads.html) `~> 1.4.0`
+- [Terraform](https://www.terraform.io/downloads.html) `>= 1.4.0`
   - Although it may work with previous versions, it has not been tested.
   - I recommend using [tfenv](https://github.com/tfutils/tfenv) to manage Terraform versions.
 - [pre-commit](https://pre-commit.com/) `== 3.3.2`
