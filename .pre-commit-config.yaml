@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.81.0
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+        args:
+          - --args=--lockfile=false
+      - id: terraform_tflint
+        args:
+          - --args=--recursive
+          - --args=-c=.tflint.hcl
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: detect-aws-credentials
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
