@@ -88,7 +88,7 @@ No modules.
 
 ## Examples
 
-You can find an example [here](examples/) of how to use this module.
+You can find an example [here](example/) of how to use this module.
 
 ## Dependencies
 
