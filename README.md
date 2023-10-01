@@ -18,8 +18,27 @@ This module creates a LibVirt domain (instances) using Terraform.
 ## Usage
 
 ```hcl
+terraform {
+  required_version = ">= 1.4"
+
+  required_providers {
+    libvirt = {
+      source  = "dmacvicar/libvirt"
+      version = "0.7.1"
+    }
+  }
+}
+
+provider "libvirt" {
+  uri = "qemu:///system"
+}
+
 module "example" {
   source = "github.com/dyegoe/terraform-libvirt?ref=main"
+
+  user           = "ubuntu"
+  groups         = ["users", "admin"]
+  ssh_public_key = "ssh-ed25519 AAAA..."
 
   source_disk_image = "/var/lib/libvirt/images/jammy-server-cloudimg-amd64.img"
   instances = {
