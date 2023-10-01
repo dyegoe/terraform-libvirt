@@ -1,4 +1,5 @@
 #cloud-config
+fqdn: ${hostname}
 ssh_pwauth: True
 chpasswd:
   list: |
