@@ -26,11 +26,13 @@ module "example" {
       memory    = 512
       vcpu      = 1
       autostart = true
+      disk_size = 5
     }
     "example2" = {
       memory    = 512
       vcpu      = 1
       autostart = true
+      disk_size = 5
     }
   }
 }

@@ -25,7 +25,8 @@ variable "instances" {
     memory    = number
     vcpu      = number
     autostart = bool
+    disk_size = number
   }))
   default     = {}
-  description = "A map of instance names to instance configurations."
+  description = "A map of instance names to instance configurations. disk_size is in GB."
 }

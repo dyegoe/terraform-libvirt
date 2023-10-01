@@ -1,9 +1,17 @@
+resource "libvirt_volume" "source" {
+  name   = "terraform-libvirt-source.img"
+  pool   = "default"
+  source = var.source_disk_image
+  format = "qcow2"
+}
+
 resource "libvirt_volume" "this" {
-  for_each = var.instances
-  name     = "${each.key}.img"
-  pool     = "default"
-  source   = var.source_disk_image
-  format   = "qcow2"
+  for_each       = var.instances
+  name           = "${each.key}.img"
+  pool           = "default"
+  base_volume_id = libvirt_volume.source.id
+  format         = "qcow2"
+  size           = each.value.disk_size * 1073741824
 }
 
 data "template_file" "user_data" {
