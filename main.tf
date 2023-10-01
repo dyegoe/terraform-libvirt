@@ -14,6 +14,7 @@ data "template_file" "user_data" {
     user           = var.user
     groups         = join(",", var.groups)
     ssh_public_key = var.ssh_public_key
+    hostname       = each.key
   }
 }
 
