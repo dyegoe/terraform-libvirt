@@ -85,6 +85,7 @@ No modules.
 |------|------|
 | [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/cloudinit_disk) | resource |
 | [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/domain) | resource |
+| [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/network) | resource |
 | [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
 | [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
 | [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/2.2.0/docs/data-sources/file) | data source |
@@ -94,7 +95,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_groups"></a> [groups](#input\_groups) | The groups to add the user to. | `list(string)` | <pre>[<br>  "users",<br>  "admin"<br>]</pre> | no |
-| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    memory    = number<br>    vcpu      = number<br>    autostart = bool<br>    disk_size = number<br>  }))</pre> | `{}` | no |
+| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    memory     = number<br>    vcpu       = number<br>    autostart  = bool<br>    disk_size  = number<br>    ip_address = optional(string, null)<br>  }))</pre> | `{}` | no |
+| <a name="input_network"></a> [network](#input\_network) | The network configuration for the instances. | <pre>object({<br>    name      = string<br>    mode      = string<br>    domain    = string<br>    addresses = list(string)<br>  })</pre> | <pre>{<br>  "addresses": [<br>    "192.168.125.0/24"<br>  ],<br>  "domain": "example.com",<br>  "mode": "nat",<br>  "name": "example"<br>}</pre> | no |
 | <a name="input_source_disk_image"></a> [source\_disk\_image](#input\_source\_disk\_image) | The path to the source disk image to use for the instances. This image will be copied to a new volume for each instance. The image must be in qcow2 format. | `string` | n/a | yes |
 | <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | The public key to add to the user's authorized\_keys file. | `string` | n/a | yes |
 | <a name="input_user"></a> [user](#input\_user) | The user to create on the instances. | `string` | `"ubuntu"` | no |
