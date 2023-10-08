@@ -1,10 +1,7 @@
 #cloud-config
-fqdn: ${hostname}
-ssh_pwauth: True
-chpasswd:
-  list: |
-    root:password
-  expire: False
+hostname: ${hostname}
+fqdn: ${hostname}.${domain}
+manage_etc_hosts: true
 users:
   - name: ${user}
     sudo: ALL=(ALL) NOPASSWD:ALL

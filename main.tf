@@ -23,7 +23,15 @@ data "template_file" "user_data" {
     groups         = join(",", var.groups)
     ssh_public_key = var.ssh_public_key
     hostname       = each.key
+    domain         = var.network.domain
   }
+}
+
+resource "libvirt_network" "this" {
+  name      = var.network.name
+  mode      = var.network.mode
+  domain    = var.network.domain
+  addresses = var.network.addresses
 }
 
 resource "libvirt_cloudinit_disk" "this" {
@@ -40,11 +48,25 @@ resource "libvirt_domain" "name" {
   autostart = each.value.autostart
   cloudinit = libvirt_cloudinit_disk.this[each.key].id
 
-  network_interface {
-    network_name   = "default"
-    wait_for_lease = true
-    hostname       = each.key
+  dynamic "network_interface" {
+    for_each = each.value.ip_address == null ? [1] : []
+    content {
+      network_id     = libvirt_network.this.id
+      wait_for_lease = true
+      hostname       = each.key
+    }
   }
+
+  dynamic "network_interface" {
+    for_each = each.value.ip_address != null ? [1] : []
+    content {
+      network_id     = libvirt_network.this.id
+      wait_for_lease = true
+      addresses      = [each.value.ip_address]
+      hostname       = each.key
+    }
+  }
+
 
   disk {
     volume_id = libvirt_volume.this[each.key].id
