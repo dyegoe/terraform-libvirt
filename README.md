@@ -19,8 +19,7 @@ This module creates a LibVirt domain (instances) using Terraform.
 
 ```hcl
 terraform {
-  required_version = ">= 1.4"
-
+  required_version = ">= 1.3"
   required_providers {
     libvirt = {
       source  = "dmacvicar/libvirt"
@@ -34,27 +33,40 @@ provider "libvirt" {
 }
 
 module "example" {
-  source = "github.com/dyegoe/terraform-libvirt?ref=main"
-
-  user           = "ubuntu"
-  groups         = ["users", "admin"]
-  ssh_public_key = "ssh-ed25519 AAAA..."
-
+  source            = "github.com/dyegoe/terraform-libvirt?ref=main"
+  user              = "ubuntu"
+  groups            = ["users", "admin"]
+  ssh_public_key    = "ssh-ed25519 AAAA..."
   source_disk_image = "/var/lib/libvirt/images/jammy-server-cloudimg-amd64.img"
+  network = {
+    name      = "example"
+    mode      = "nat"
+    domain    = "example.local"
+    addresses = ["192.168.200.0/24"]
+  }
   instances = {
     "example1" = {
-      memory    = 512
-      vcpu      = 1
-      autostart = true
-      disk_size = 3
+      memory     = 512
+      vcpu       = 1
+      autostart  = true
+      disk_size  = 2
+      ip_address = "192.168.200.2"
     }
     "example2" = {
-      memory    = 512
-      vcpu      = 1
-      autostart = true
-      disk_size = 3
+      memory     = 2048
+      vcpu       = 2
+      autostart  = true
+      disk_size  = 2
     }
   }
+}
+
+output "ip_address" {
+  value = module.example.ip_address
+}
+
+output "ssh_command" {
+  value = module.example.ssh_command
 }
 ```
 
@@ -64,7 +76,7 @@ module "example" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
 | <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | 0.7.1 |
 | <a name="requirement_template"></a> [template](#requirement\_template) | 2.2.0 |
 
@@ -116,7 +128,7 @@ You can find an example [here](example/) of how to use this module.
 
 ## Dependencies
 
-- [Terraform](https://www.terraform.io/downloads.html) `>= 1.4.0`
+- [Terraform](https://www.terraform.io/downloads.html) `>= 1.3.0`
   - Although it may work with previous versions, it has not been tested.
   - I recommend using [tfenv](https://github.com/tfutils/tfenv) to manage Terraform versions.
 - [pre-commit](https://pre-commit.com/) `== 3.3.2`
