@@ -6,8 +6,6 @@ users:
   - name: ${user}
     sudo: ALL=(ALL) NOPASSWD:ALL
     groups: ${groups}
-    home: /home/${user}
     shell: /bin/bash
-    lock_passwd: False
-    ssh-authorized-keys:
+    ssh_authorized_keys:
       - ${ssh_public_key}
