@@ -1,0 +1,8 @@
+{
+  "yaml.schemas": {
+    "templates/cloud-config.yaml": "https://raw.githubusercontent.com/chrismalek/azure-vmss-ignition/master/cloud-config.schema.json"
+  },
+  "files.associations": {
+    "*.yaml": "yaml"
+  }
+}
