@@ -48,11 +48,3 @@ module "example" {
     }
   }
 }
-
-output "ip_address" {
-  value = module.example.ip_address
-}
-
-output "ssh_command" {
-  value = module.example.ssh_command
-}
