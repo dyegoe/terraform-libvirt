@@ -16,7 +16,7 @@ resource "libvirt_volume" "this" {
 
 data "template_file" "user_data" {
   for_each = var.instances
-  template = file("${path.module}/config/cloud-init.yaml")
+  template = file("${path.module}/templates/cloud-config.yaml")
 
   vars = {
     user           = var.user

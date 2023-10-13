@@ -43,7 +43,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | n/a |
-| <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | n/a |
+| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the instances |
+| <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH command to connect to the instance |
 <!-- END_TF_DOCS -->
 <!-- markdownlint-enable MD033 -->
