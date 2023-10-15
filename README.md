@@ -4,13 +4,13 @@ This module creates a LibVirt domain (instances) using Terraform.
 
 - [Terraform LibVirt Module](#terraform-libvirt-module)
   - [Usage](#usage)
+  - [Examples](#examples)
   - [Requirements](#requirements)
   - [Providers](#providers)
   - [Modules](#modules)
   - [Resources](#resources)
   - [Inputs](#inputs)
   - [Outputs](#outputs)
-  - [Examples](#examples)
   - [Dependencies](#dependencies)
   - [Authors](#authors)
   - [License](#license)
@@ -74,6 +74,10 @@ output "root_password" {
 }
 ```
 
+## Examples
+
+You can find an example [here](examples/) of how to use this module.
+
 <!-- markdownlint-disable MD033 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -133,10 +137,6 @@ No modules.
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH commands to connect to the instances |
 <!-- END_TF_DOCS -->
 <!-- markdownlint-enable MD033 -->
-
-## Examples
-
-You can find an example [here](example/) of how to use this module.
 
 ## Dependencies
 
