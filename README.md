@@ -81,19 +81,19 @@ output "root_password" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_htpasswd"></a> [htpasswd](#requirement\_htpasswd) | 1.0.4 |
-| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | 0.7.1 |
-| <a name="requirement_random"></a> [random](#requirement\_random) | 3.5.1 |
-| <a name="requirement_template"></a> [template](#requirement\_template) | 2.2.0 |
+| <a name="requirement_htpasswd"></a> [htpasswd](#requirement\_htpasswd) | >=1.0.4 |
+| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | >=0.7.1 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >=3.5.1 |
+| <a name="requirement_template"></a> [template](#requirement\_template) | >=2.2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_htpasswd"></a> [htpasswd](#provider\_htpasswd) | 1.0.4 |
-| <a name="provider_libvirt"></a> [libvirt](#provider\_libvirt) | 0.7.1 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.5.1 |
-| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
+| <a name="provider_htpasswd"></a> [htpasswd](#provider\_htpasswd) | >=1.0.4 |
+| <a name="provider_libvirt"></a> [libvirt](#provider\_libvirt) | >=0.7.1 |
+| <a name="provider_random"></a> [random](#provider\_random) | >=3.5.1 |
+| <a name="provider_template"></a> [template](#provider\_template) | >=2.2.0 |
 
 ## Modules
 
@@ -103,15 +103,15 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [htpasswd_password.this](https://registry.terraform.io/providers/loafoe/htpasswd/1.0.4/docs/resources/password) | resource |
-| [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/cloudinit_disk) | resource |
-| [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/domain) | resource |
-| [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/network) | resource |
-| [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
-| [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
-| [random_password.salt](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
-| [random_password.this](https://registry.terraform.io/providers/hashicorp/random/3.5.1/docs/resources/password) | resource |
-| [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/2.2.0/docs/data-sources/file) | data source |
+| [htpasswd_password.this](https://registry.terraform.io/providers/loafoe/htpasswd/latest/docs/resources/password) | resource |
+| [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/cloudinit_disk) | resource |
+| [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/domain) | resource |
+| [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/network) | resource |
+| [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
+| [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
+| [random_password.salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_password.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 

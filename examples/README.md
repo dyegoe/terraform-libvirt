@@ -17,7 +17,7 @@ And it is ready to apply [ansible-k8s-cluster](https://github.com/dyegoe/ansible
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | 0.7.1 |
+| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | >=0.7.1 |
 
 ## Providers
 
