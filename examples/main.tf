@@ -30,21 +30,21 @@ module "example" {
       vcpu       = 2
       autostart  = true
       disk_size  = 8
-      ip_address = "10.100.200.2"
+      ip_address = "10.100.200.10"
     }
-    "node01" = {
-      memory     = 2048
+    "node1" = {
+      memory     = 4096
       vcpu       = 2
       autostart  = true
       disk_size  = 8
-      ip_address = "10.100.200.3"
+      ip_address = "10.100.200.11"
     }
-    "node02" = {
-      memory     = 2048
+    "node2" = {
+      memory     = 4096
       vcpu       = 2
       autostart  = true
       disk_size  = 8
-      ip_address = "10.100.200.4"
+      ip_address = "10.100.200.12"
     }
   }
 }

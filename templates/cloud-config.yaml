@@ -2,10 +2,24 @@
 hostname: ${hostname}
 fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+packages:
+  - qemu-guest-agent
+user:
+  name: ${user}
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  groups: ${groups}
+  shell: /bin/bash
+  ssh_authorized_keys:
+    - ${ssh_public_key}
 users:
-  - name: ${user}
-    sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: ${groups}
-    shell: /bin/bash
-    ssh_authorized_keys:
-      - ${ssh_public_key}
+  - default
+  - name: root
+    hashed_passwd: ${root_password}
+    lock_passwd: false
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, qemu-guest-agent]
+  - [systemctl, start, --no-block, qemu-guest-agent]
