@@ -1,3 +1,17 @@
+resource "random_password" "this" {
+  length  = 8
+  special = false
+}
+
+resource "random_password" "salt" {
+  length  = 8
+  special = false
+}
+resource "htpasswd_password" "this" {
+  password = random_password.this.result
+  salt     = random_password.salt.result
+}
+
 resource "libvirt_volume" "source" {
   name   = "terraform-libvirt-source.img"
   pool   = "default"
@@ -24,6 +38,7 @@ data "template_file" "user_data" {
     ssh_public_key = var.ssh_public_key
     hostname       = each.key
     domain         = var.network.domain
+    root_password  = htpasswd_password.this.sha512
   }
 }
 

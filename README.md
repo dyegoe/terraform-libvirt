@@ -53,7 +53,7 @@ module "example" {
       ip_address = "192.168.200.2"
     }
     "example2" = {
-      memory     = 2048
+      memory     = 512
       vcpu       = 2
       autostart  = true
       disk_size  = 2
@@ -68,6 +68,10 @@ output "ip_address" {
 output "ssh_command" {
   value = module.example.ssh_command
 }
+
+output "root_password" {
+  value = module.example.root_password
+}
 ```
 
 <!-- markdownlint-disable MD033 -->
@@ -77,15 +81,19 @@ output "ssh_command" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | 0.7.1 |
-| <a name="requirement_template"></a> [template](#requirement\_template) | 2.2.0 |
+| <a name="requirement_htpasswd"></a> [htpasswd](#requirement\_htpasswd) | >=1.0.4 |
+| <a name="requirement_libvirt"></a> [libvirt](#requirement\_libvirt) | >=0.7.1 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >=3.5.1 |
+| <a name="requirement_template"></a> [template](#requirement\_template) | >=2.2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_libvirt"></a> [libvirt](#provider\_libvirt) | 0.7.1 |
-| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
+| <a name="provider_htpasswd"></a> [htpasswd](#provider\_htpasswd) | >=1.0.4 |
+| <a name="provider_libvirt"></a> [libvirt](#provider\_libvirt) | >=0.7.1 |
+| <a name="provider_random"></a> [random](#provider\_random) | >=3.5.1 |
+| <a name="provider_template"></a> [template](#provider\_template) | >=2.2.0 |
 
 ## Modules
 
@@ -95,12 +103,15 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/cloudinit_disk) | resource |
-| [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/domain) | resource |
-| [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/network) | resource |
-| [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
-| [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/0.7.1/docs/resources/volume) | resource |
-| [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/2.2.0/docs/data-sources/file) | data source |
+| [htpasswd_password.this](https://registry.terraform.io/providers/loafoe/htpasswd/latest/docs/resources/password) | resource |
+| [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/cloudinit_disk) | resource |
+| [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/domain) | resource |
+| [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/network) | resource |
+| [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
+| [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
+| [random_password.salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [random_password.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
+| [template_file.user_data](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
 
 ## Inputs
 
@@ -118,6 +129,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP addresses of the instances |
+| <a name="output_root_password"></a> [root\_password](#output\_root\_password) | A random password for the user root. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH commands to connect to the instances |
 <!-- END_TF_DOCS -->
 <!-- markdownlint-enable MD033 -->
