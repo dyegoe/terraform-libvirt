@@ -4,13 +4,17 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
+        args:
+          - --tf-init-args=-upgrade
+          - --tf-init-args=-backend=false
       - id: terraform_docs
         args:
           - --args=--lockfile=false
+          - --args=--config=.terraform-docs.yaml
       - id: terraform_tflint
         args:
           - --args=--recursive
-          - --args=-c=.tflint.hcl
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -18,5 +22,4 @@ repos:
       - id: detect-aws-credentials
       - id: trailing-whitespace
       - id: end-of-file-fixer
-        # exclude json files
-        exclude: '\.json$'
+        exclude: \.json$
