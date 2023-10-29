@@ -43,6 +43,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_instances_with_additional_disks"></a> [instances\_with\_additional\_disks](#output\_instances\_with\_additional\_disks) | A map of instance names with additional disks to the size of the additional disk in GB. |
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the instances |
 | <a name="output_root_password"></a> [root\_password](#output\_root\_password) | A random password for the user root. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH command to connect to the instance |

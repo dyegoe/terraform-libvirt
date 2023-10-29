@@ -20,18 +20,21 @@ module "example" {
     domain    = "k8s.local"
     addresses = ["10.100.200.0/24"]
   }
-  user           = "ubuntu"
-  groups         = ["users", "admin"]
-  ssh_public_key = var.ssh_public_key
-  source_volume  = "jammy-server-cloudimg-amd64.img"
-  memory         = 4096
-  vcpu           = 2
-  autostart      = true
-  disk_size      = 8
+  user                 = "ubuntu"
+  groups               = ["users", "admin"]
+  ssh_public_key       = var.ssh_public_key
+  source_volume        = "jammy-server-cloudimg-amd64.img"
+  memory               = 4096
+  vcpu                 = 2
+  autostart            = true
+  disk_size            = 8
+  additional_disk      = true
+  additional_disk_size = 5
   instances = {
     "master" = {
-      memory     = 2048
-      ip_address = "10.100.200.10"
+      memory          = 2048
+      ip_address      = "10.100.200.10"
+      additional_disk = false
     }
     "node1" = {
       ip_address = "10.100.200.11"

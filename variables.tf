@@ -62,17 +62,31 @@ variable "disk_size" {
   description = "The size of the disk to create for each instance in GB."
 }
 
+variable "additional_disk" {
+  type        = bool
+  default     = false
+  description = "Whether to create an additional disk for each instance."
+}
+
+variable "additional_disk_size" {
+  type        = number
+  default     = 1
+  description = "The size of the additional disk to create for each instance in GB."
+}
+
 variable "instances" {
   type = map(object({
-    user           = optional(string, null)
-    groups         = optional(list(string), null)
-    ssh_public_key = optional(string, null)
-    source_volume  = optional(string, null)
-    memory         = optional(number)
-    vcpu           = optional(number)
-    autostart      = optional(bool)
-    disk_size      = optional(number)
-    ip_address     = optional(string, null)
+    user                 = optional(string)
+    groups               = optional(list(string))
+    ssh_public_key       = optional(string)
+    source_volume        = optional(string)
+    memory               = optional(number)
+    vcpu                 = optional(number)
+    autostart            = optional(bool)
+    disk_size            = optional(number)
+    additional_disk      = optional(bool)
+    additional_disk_size = optional(number)
+    ip_address           = optional(string)
   }))
   default     = {}
   description = "A map of instance names to instance configurations. disk_size is in GB."

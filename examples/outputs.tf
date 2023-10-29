@@ -13,3 +13,8 @@ output "root_password" {
   description = "A random password for the user root."
   sensitive   = true
 }
+
+output "instances_with_additional_disks" {
+  value       = module.example.instances_with_additional_disks
+  description = "A map of instance names with additional disks to the size of the additional disk in GB."
+}

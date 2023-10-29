@@ -131,6 +131,7 @@ No modules.
 | [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/cloudinit_disk) | resource |
 | [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/domain) | resource |
 | [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/network) | resource |
+| [libvirt_volume.additional](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
 | [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
 | [random_password.salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -140,10 +141,12 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_disk"></a> [additional\_disk](#input\_additional\_disk) | Whether to create an additional disk for each instance. | `bool` | `false` | no |
+| <a name="input_additional_disk_size"></a> [additional\_disk\_size](#input\_additional\_disk\_size) | The size of the additional disk to create for each instance in GB. | `number` | `1` | no |
 | <a name="input_autostart"></a> [autostart](#input\_autostart) | Whether to automatically start the instances when the host boots. | `bool` | `true` | no |
 | <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | The size of the disk to create for each instance in GB. | `number` | `3` | no |
 | <a name="input_groups"></a> [groups](#input\_groups) | The groups to add the user to. | `list(string)` | <pre>[<br>  "users",<br>  "admin"<br>]</pre> | no |
-| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    user           = optional(string, null)<br>    groups         = optional(list(string), null)<br>    ssh_public_key = optional(string, null)<br>    source_volume  = optional(string, null)<br>    memory         = optional(number)<br>    vcpu           = optional(number)<br>    autostart      = optional(bool)<br>    disk_size      = optional(number)<br>    ip_address     = optional(string, null)<br>  }))</pre> | `{}` | no |
+| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    user                 = optional(string)<br>    groups               = optional(list(string))<br>    ssh_public_key       = optional(string)<br>    source_volume        = optional(string)<br>    memory               = optional(number)<br>    vcpu                 = optional(number)<br>    autostart            = optional(bool)<br>    disk_size            = optional(number)<br>    additional_disk      = optional(bool)<br>    additional_disk_size = optional(number)<br>    ip_address           = optional(string)<br>  }))</pre> | `{}` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory to allocate to each instance in MB. | `number` | `512` | no |
 | <a name="input_network"></a> [network](#input\_network) | Network configuration parameters. These are used to create a Libvirt network which will be used by the instances. | <pre>object({<br>    name      = string<br>    mode      = string<br>    domain    = string<br>    addresses = list(string)<br>  })</pre> | <pre>{<br>  "addresses": [<br>    "192.168.125.0/24"<br>  ],<br>  "domain": "example.com",<br>  "mode": "nat",<br>  "name": "example"<br>}</pre> | no |
 | <a name="input_source_volume"></a> [source\_volume](#input\_source\_volume) | The name of the volume to use as a base for the instances. It must be in the LibVirt default pool. | `string` | `null` | no |
@@ -155,6 +158,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_instances_with_additional_disks"></a> [instances\_with\_additional\_disks](#output\_instances\_with\_additional\_disks) | A map of instance names with additional disks to the size of the additional disk in GB. |
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP addresses of the instances |
 | <a name="output_root_password"></a> [root\_password](#output\_root\_password) | A random password for the user root. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH commands to connect to the instances |

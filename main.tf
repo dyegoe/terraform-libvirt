@@ -28,6 +28,14 @@ resource "libvirt_volume" "this" {
   size             = (each.value.disk_size != null ? each.value.disk_size : var.disk_size) * 1073741824
 }
 
+resource "libvirt_volume" "additional" {
+  for_each = local.instances_with_additional_disks
+  name     = "${each.key}-additional.img"
+  pool     = "default"
+  format   = "qcow2"
+  size     = each.value.size * 1073741824
+}
+
 data "template_file" "user_data" {
   for_each = var.instances
   template = file("${path.module}/templates/cloud-config.yaml")
@@ -78,5 +86,12 @@ resource "libvirt_domain" "name" {
 
   disk {
     volume_id = libvirt_volume.this[each.key].id
+  }
+
+  dynamic "disk" {
+    for_each = length(lookup(local.instances_with_additional_disks, each.key, [])) != 0 ? [1] : []
+    content {
+      volume_id = libvirt_volume.additional[each.key].id
+    }
   }
 }
