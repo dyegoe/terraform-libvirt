@@ -3,6 +3,7 @@
 This module creates a LibVirt domain (instances) using Terraform.
 
 - [Terraform LibVirt Module](#terraform-libvirt-module)
+  - [Pre-requisites](#pre-requisites)
   - [Usage](#usage)
   - [Examples](#examples)
   - [Requirements](#requirements)
@@ -14,6 +15,18 @@ This module creates a LibVirt domain (instances) using Terraform.
   - [Dependencies](#dependencies)
   - [Authors](#authors)
   - [License](#license)
+
+## Pre-requisites
+
+This module requires an already installed and configured LibVirt environment.
+
+It is also expected that you already have a base image to use for the instances. You can download an Ubuntu image using the following commands:
+
+```bash
+sudo rm -rf /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img
+sudo curl -o /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img -fsSL https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+virsh pool-refresh default
+```
 
 ## Usage
 
@@ -33,30 +46,36 @@ provider "libvirt" {
 }
 
 module "example" {
-  source            = "github.com/dyegoe/terraform-libvirt?ref=main"
-  user              = "ubuntu"
-  groups            = ["users", "admin"]
-  ssh_public_key    = "ssh-ed25519 AAAA..."
-  source_disk_image = "/var/lib/libvirt/images/jammy-server-cloudimg-amd64.img"
+  source = "github.com/dyegoe/terraform-libvirt?ref=main"
   network = {
     name      = "example"
     mode      = "nat"
     domain    = "example.local"
     addresses = ["192.168.200.0/24"]
   }
+  user           = "ubuntu"
+  groups         = ["users", "admin"]
+  ssh_public_key = "ssh-ed25519 AAAA..."
+  source_volume  = "jammy-server-cloudimg-amd64.img"
+  memory         = 512
+  vcpu           = 1
+  autostart      = true
+  disk_size      = 3
   instances = {
     "example1" = {
-      memory     = 512
-      vcpu       = 1
-      autostart  = true
-      disk_size  = 2
+      # when the values are not specified, the default values provided above are used.
       ip_address = "192.168.200.2"
     }
     "example2" = {
-      memory     = 512
-      vcpu       = 2
-      autostart  = true
-      disk_size  = 2
+      user           = "example2"
+      groups         = ["users"]
+      ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMK/KqEF4iwVKvNyYTIymM+oXYsW493/wE7RnKtEYhNF"
+      source_volume  = "mantic-server-cloudimg-amd64.img"
+      memory         = 1024
+      vcpu           = 2
+      autostart      = false
+      disk_size      = 4
+      # when the ip_address is not specified, the instance will not have a static IP address. It will be assigned by DHCP.
     }
   }
 }
@@ -70,7 +89,8 @@ output "ssh_command" {
 }
 
 output "root_password" {
-  value = module.example.root_password
+  value     = module.example.root_password
+  sensitive = true
 }
 ```
 
@@ -111,7 +131,6 @@ No modules.
 | [libvirt_cloudinit_disk.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/cloudinit_disk) | resource |
 | [libvirt_domain.name](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/domain) | resource |
 | [libvirt_network.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/network) | resource |
-| [libvirt_volume.source](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
 | [libvirt_volume.this](https://registry.terraform.io/providers/dmacvicar/libvirt/latest/docs/resources/volume) | resource |
 | [random_password.salt](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
 | [random_password.this](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/password) | resource |
@@ -121,12 +140,16 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_autostart"></a> [autostart](#input\_autostart) | Whether to automatically start the instances when the host boots. | `bool` | `true` | no |
+| <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | The size of the disk to create for each instance in GB. | `number` | `3` | no |
 | <a name="input_groups"></a> [groups](#input\_groups) | The groups to add the user to. | `list(string)` | <pre>[<br>  "users",<br>  "admin"<br>]</pre> | no |
-| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    memory     = number<br>    vcpu       = number<br>    autostart  = bool<br>    disk_size  = number<br>    ip_address = optional(string, null)<br>  }))</pre> | `{}` | no |
-| <a name="input_network"></a> [network](#input\_network) | The network configuration for the instances. | <pre>object({<br>    name      = string<br>    mode      = string<br>    domain    = string<br>    addresses = list(string)<br>  })</pre> | <pre>{<br>  "addresses": [<br>    "192.168.125.0/24"<br>  ],<br>  "domain": "example.com",<br>  "mode": "nat",<br>  "name": "example"<br>}</pre> | no |
-| <a name="input_source_disk_image"></a> [source\_disk\_image](#input\_source\_disk\_image) | The path to the source disk image to use for the instances. This image will be copied to a new volume for each instance. The image must be in qcow2 format. | `string` | n/a | yes |
-| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | The public key to add to the user's authorized\_keys file. | `string` | n/a | yes |
+| <a name="input_instances"></a> [instances](#input\_instances) | A map of instance names to instance configurations. disk\_size is in GB. | <pre>map(object({<br>    user           = optional(string, null)<br>    groups         = optional(list(string), null)<br>    ssh_public_key = optional(string, null)<br>    source_volume  = optional(string, null)<br>    memory         = optional(number)<br>    vcpu           = optional(number)<br>    autostart      = optional(bool)<br>    disk_size      = optional(number)<br>    ip_address     = optional(string, null)<br>  }))</pre> | `{}` | no |
+| <a name="input_memory"></a> [memory](#input\_memory) | The amount of memory to allocate to each instance in MB. | `number` | `512` | no |
+| <a name="input_network"></a> [network](#input\_network) | Network configuration parameters. These are used to create a Libvirt network which will be used by the instances. | <pre>object({<br>    name      = string<br>    mode      = string<br>    domain    = string<br>    addresses = list(string)<br>  })</pre> | <pre>{<br>  "addresses": [<br>    "192.168.125.0/24"<br>  ],<br>  "domain": "example.com",<br>  "mode": "nat",<br>  "name": "example"<br>}</pre> | no |
+| <a name="input_source_volume"></a> [source\_volume](#input\_source\_volume) | The name of the volume to use as a base for the instances. It must be in the LibVirt default pool. | `string` | `null` | no |
+| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | The public key to add to the user's authorized\_keys file. | `string` | `null` | no |
 | <a name="input_user"></a> [user](#input\_user) | The user to create on the instances. | `string` | `"ubuntu"` | no |
+| <a name="input_vcpu"></a> [vcpu](#input\_vcpu) | The number of virtual CPUs to allocate to each instance. | `number` | `1` | no |
 
 ## Outputs
 
