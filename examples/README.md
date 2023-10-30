@@ -10,6 +10,29 @@ This example will create 3 instances with the following names:
 
 And it is ready to apply [ansible-k8s-cluster](https://github.com/dyegoe/ansible-k8s-cluster) on it and create a Kubernetes cluster.
 
+## Usage
+
+```bash
+export TF_VAR_ssh_public_key="$(cat ~/.ssh/id_rsa.pub)"
+terraform init
+terraform apply
+```
+
+or you can create `terraform.tfvars` file with the following content:
+
+```hcl
+ssh_public_key = "ssh-rsa AAAAB..."
+```
+
+There are also some `Makefile` targets to help you:
+
+```bash
+make # It will initialize terraform, plan and apply
+make clean # It will destroy the instances and remove the terraform state
+```
+
+For more information about `Makefile` targets, run `make help`.
+
 <!-- markdownlint-disable MD033 -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
