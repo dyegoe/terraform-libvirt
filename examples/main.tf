@@ -29,7 +29,7 @@ module "example" {
   autostart            = true
   disk_size            = 8
   additional_disk      = true
-  additional_disk_size = 5
+  additional_disk_size = 2
   instances = {
     "master" = {
       memory          = 2048
@@ -41,6 +41,9 @@ module "example" {
     }
     "node2" = {
       ip_address = "10.10.20.12"
+    }
+    "node3" = {
+      ip_address = "10.10.20.13"
     }
   }
 }
