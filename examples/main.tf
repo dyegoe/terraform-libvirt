@@ -13,38 +13,37 @@ provider "libvirt" {
 }
 
 module "example" {
-  source            = "../."
-  user              = "ubuntu"
-  groups            = ["users", "admin"]
-  ssh_public_key    = var.ssh_public_key
-  source_disk_image = "/var/lib/libvirt/images/jammy-server-cloudimg-amd64.img"
+  source = "../."
   network = {
     name      = "k8s"
     mode      = "nat"
     domain    = "k8s.local"
-    addresses = ["10.100.200.0/24"]
+    addresses = ["10.10.20.0/24"]
   }
+  user                 = "ubuntu"
+  groups               = ["users", "admin"]
+  ssh_public_key       = var.ssh_public_key
+  source_volume        = "jammy-server-cloudimg-amd64.img"
+  memory               = 4096
+  vcpu                 = 2
+  autostart            = true
+  disk_size            = 8
+  additional_disk      = true
+  additional_disk_size = 2
   instances = {
     "master" = {
-      memory     = 2048
-      vcpu       = 2
-      autostart  = true
-      disk_size  = 8
-      ip_address = "10.100.200.10"
+      memory          = 2048
+      ip_address      = "10.10.20.10"
+      additional_disk = false
     }
     "node1" = {
-      memory     = 4096
-      vcpu       = 2
-      autostart  = true
-      disk_size  = 8
-      ip_address = "10.100.200.11"
+      ip_address = "10.10.20.11"
     }
     "node2" = {
-      memory     = 4096
-      vcpu       = 2
-      autostart  = true
-      disk_size  = 8
-      ip_address = "10.100.200.12"
+      ip_address = "10.10.20.12"
+    }
+    "node3" = {
+      ip_address = "10.10.20.13"
     }
   }
 }

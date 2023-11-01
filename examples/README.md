@@ -2,13 +2,37 @@
 
 This is an example on how to use the `terraform-libvirt` module.
 
-This example will create 3 instances with the following names:
+This example will create 4 instances with the following names:
 
 - `master`
 - `node1`
 - `node2`
+- `node3`
 
 And it is ready to apply [ansible-k8s-cluster](https://github.com/dyegoe/ansible-k8s-cluster) on it and create a Kubernetes cluster.
+
+## Usage
+
+```bash
+export TF_VAR_ssh_public_key="$(cat ~/.ssh/id_rsa.pub)"
+terraform init
+terraform apply
+```
+
+or you can create `terraform.tfvars` file with the following content:
+
+```hcl
+ssh_public_key = "ssh-rsa AAAAB..."
+```
+
+There are also some `Makefile` targets to help you:
+
+```bash
+make # It will initialize terraform, plan and apply
+make clean # It will destroy the instances and remove the terraform state
+```
+
+For more information about `Makefile` targets, run `make help`.
 
 <!-- markdownlint-disable MD033 -->
 <!-- BEGIN_TF_DOCS -->
@@ -43,6 +67,7 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_instances_with_additional_disks"></a> [instances\_with\_additional\_disks](#output\_instances\_with\_additional\_disks) | A map of instance names with additional disks to the size of the additional disk in GB. |
 | <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the instances |
 | <a name="output_root_password"></a> [root\_password](#output\_root\_password) | A random password for the user root. |
 | <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH command to connect to the instance |
