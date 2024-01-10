@@ -4,6 +4,10 @@ variable "network" {
     mode      = string
     domain    = string
     addresses = list(string)
+    dns = optional(object({
+      enabled    = optional(bool)
+      local_only = optional(bool)
+    }))
   })
   default = {
     name      = "example"
