@@ -3,6 +3,10 @@ resource "libvirt_network" "this" {
   mode      = var.network.mode
   domain    = var.network.domain
   addresses = var.network.addresses
+  dns {
+    enabled    = var.network.dns == null ? true : var.network.dns.enabled != null ? var.network.dns.enabled : true
+    local_only = var.network.dns == null ? false : var.network.dns.local_only != null ? var.network.dns.local_only : false
+  }
 }
 
 resource "random_password" "this" {
