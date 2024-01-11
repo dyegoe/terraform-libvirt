@@ -28,6 +28,13 @@ sudo curl -o /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img -fsSL https
 virsh pool-refresh default
 ```
 
+Or you can download Fedora using the following commands:
+
+```bash
+curl -o /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2 -fsSL https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
+virsh pool-refresh default
+```
+
 ## Usage
 
 ```hcl
