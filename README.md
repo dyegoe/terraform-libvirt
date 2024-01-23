@@ -20,11 +20,37 @@ This module creates a LibVirt domain (instances) using Terraform.
 
 This module requires an already installed and configured LibVirt environment.
 
-It is also expected that you already have a base image to use for the instances. You can download an Ubuntu image using the following commands:
+It is also expected that you already have a base image to use for the instances.
+
+Ubuntu 22.04 LTS (Jammy) cloud images can be downloaded from [here](https://cloud-images.ubuntu.com/jammy/current/).
 
 ```bash
 sudo rm -rf /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img
-sudo curl -o /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img -fsSL https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+sudo curl -o /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img -fSL https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img
+virsh pool-refresh default
+```
+
+Fedora 39 cloud images can be downloaded from [here](https://fedoraproject.org/cloud/download).
+
+```bash
+sudo rm -rf /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
+sudo curl -o /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2 -fsSL https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
+virsh pool-refresh default
+```
+
+AlmaLinux 9 cloud images can be downloaded from [here](https://almalinux.org/get-almalinux/#Cloud_Images).
+
+```bash
+sudo rm -rf /var/lib/libvirt/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2
+sudo curl -o /var/lib/libvirt/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2 -fsSL https://repo.almalinux.org/almalinux/9/cloud/x86_64/images/AlmaLinux-9-GenericCloud-latest.x86_64.qcow2
+virsh pool-refresh default
+```
+
+Rocky Linux 9 cloud images can be downloaded from [here](https://rockylinux.org/alternative-images).
+
+```bash
+sudo rm -rf /var/lib/libvirt/images/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2
+sudo curl -o /var/lib/libvirt/images/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 -fsSL https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2
 virsh pool-refresh default
 ```
 
