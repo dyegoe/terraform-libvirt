@@ -79,7 +79,7 @@ module "example" {
     domain    = "example.local"
     addresses = ["192.168.200.0/24"]
   }
-  user           = "ubuntu"
+  user           = "user"
   groups         = ["users", "admin"]
   ssh_public_key = "ssh-ed25519 AAAA..."
   source_volume  = "jammy-server-cloudimg-amd64.img"
