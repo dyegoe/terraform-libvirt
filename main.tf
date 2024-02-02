@@ -68,6 +68,10 @@ resource "libvirt_domain" "name" {
   autostart = each.value.autostart != null ? each.value.autostart : var.autostart
   cloudinit = libvirt_cloudinit_disk.this[each.key].id
 
+  cpu {
+    mode = "host-passthrough"
+  }
+
   dynamic "network_interface" {
     for_each = each.value.ip_address == null ? [1] : []
     content {

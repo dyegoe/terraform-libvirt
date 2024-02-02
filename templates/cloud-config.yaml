@@ -2,11 +2,17 @@
 hostname: ${hostname}
 fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
-package_update: true
-package_upgrade: true
-package_reboot_if_required: true
 packages:
   - qemu-guest-agent
+runcmd:
+  - [systemctl, daemon-reload]
+  - [systemctl, enable, qemu-guest-agent]
+  - [systemctl, start, --no-block, qemu-guest-agent]
+write_files:
+  - path: /etc/cloud/cloud.cfg.d/99_preserve_hostname.cfg
+    owner: root:root
+    permissions: "0644"
+    content: "preserve_hostname: true"
 user:
   name: ${user}
   sudo: ALL=(ALL) NOPASSWD:ALL
@@ -19,7 +25,3 @@ users:
   - name: root
     hashed_passwd: ${root_password}
     lock_passwd: false
-runcmd:
-  - [systemctl, daemon-reload]
-  - [systemctl, enable, qemu-guest-agent]
-  - [systemctl, start, --no-block, qemu-guest-agent]
