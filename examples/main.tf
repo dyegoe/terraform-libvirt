@@ -20,10 +20,13 @@ module "example" {
     domain    = "k8s.local"
     addresses = ["10.10.20.0/24"]
   }
-  user                 = "user"
-  groups               = ["users", "admin"]
-  ssh_public_key       = var.ssh_public_key
-  source_volume        = "jammy-server-cloudimg-amd64.img"
+  user           = "user"
+  groups         = ["users", "admin"]
+  ssh_public_key = var.ssh_public_key
+  source_volume  = "jammy-server-cloudimg-amd64.img"
+  # source_volume  = "AlmaLinux-9-GenericCloud-latest.x86_64.qcow2"
+  # source_volume  = "Rocky-9-GenericCloud-Base.latest.x86_64.qcow2"
+  # source_volume  = "Fedora-Cloud-Base-39-1.5.x86_64.qcow2"
   memory               = 4096
   vcpu                 = 2
   autostart            = true
