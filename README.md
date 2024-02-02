@@ -30,14 +30,6 @@ sudo curl -o /var/lib/libvirt/images/jammy-server-cloudimg-amd64.img -fSL https:
 virsh pool-refresh default
 ```
 
-Fedora 39 cloud images can be downloaded from [here](https://fedoraproject.org/cloud/download).
-
-```bash
-sudo rm -rf /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
-sudo curl -o /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2 -fsSL https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
-virsh pool-refresh default
-```
-
 AlmaLinux 9 cloud images can be downloaded from [here](https://almalinux.org/get-almalinux/#Cloud_Images).
 
 ```bash
@@ -51,6 +43,14 @@ Rocky Linux 9 cloud images can be downloaded from [here](https://rockylinux.org/
 ```bash
 sudo rm -rf /var/lib/libvirt/images/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2
 sudo curl -o /var/lib/libvirt/images/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 -fsSL https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2
+virsh pool-refresh default
+```
+
+Fedora 39 cloud images can be downloaded from [here](https://fedoraproject.org/cloud/download).
+
+```bash
+sudo rm -rf /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
+sudo curl -o /var/lib/libvirt/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2 -fsSL https://download.fedoraproject.org/pub/fedora/linux/releases/39/Cloud/x86_64/images/Fedora-Cloud-Base-39-1.5.x86_64.qcow2
 virsh pool-refresh default
 ```
 
