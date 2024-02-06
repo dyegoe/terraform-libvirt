@@ -1,10 +1,11 @@
 #cloud-config
 preserve_hostname: true
-hostname: ${hostname}
-fqdn: ${hostname}.k8s.local
+hostname: using-user-data
 manage_etc_hosts: true
 packages:
   - qemu-guest-agent
+bootcmd:
+  - [ip, route, add, default, via, "192.168.20.10"]
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]

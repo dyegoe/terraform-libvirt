@@ -14,11 +14,12 @@ provider "libvirt" {
 
 module "example" {
   source = "../."
-  network = {
-    name      = "k8s"
-    mode      = "nat"
-    domain    = "k8s.local"
-    addresses = ["10.10.20.0/24"]
+  networks = {
+    k8s = {
+      mode      = "nat"
+      domain    = "k8s.local"
+      addresses = ["10.10.20.0/24"]
+    }
   }
   user           = "user"
   groups         = ["users", "admin"]
@@ -36,17 +37,17 @@ module "example" {
   instances = {
     "master" = {
       memory          = 2048
-      ip_address      = "10.10.20.10"
+      networks        = { k8s = { ip_address = "10.10.20.10" } }
       additional_disk = false
     }
-    "node1" = {
-      ip_address = "10.10.20.11"
-    }
-    "node2" = {
-      ip_address = "10.10.20.12"
-    }
-    "node3" = {
-      ip_address = "10.10.20.13"
-    }
+    # "node1" = {
+    #   networks = { k8s = { ip_address = "10.10.20.11" } }
+    # }
+    # "node2" = {
+    #   networks = { k8s = { ip_address = "10.10.20.12" } }
+    # }
+    # "node3" = {
+    #   networks = { k8s = { ip_address = "10.10.20.13" } }
+    # }
   }
 }

@@ -1,11 +1,12 @@
 resource "libvirt_network" "this" {
-  name      = var.network.name
-  mode      = var.network.mode
-  domain    = var.network.domain
-  addresses = var.network.addresses
+  for_each  = var.networks
+  name      = each.key
+  mode      = each.value.mode
+  domain    = each.value.domain
+  addresses = each.value.addresses
   dns {
-    enabled    = var.network.dns == null ? true : var.network.dns.enabled != null ? var.network.dns.enabled : true
-    local_only = var.network.dns == null ? false : var.network.dns.local_only != null ? var.network.dns.local_only : false
+    enabled    = each.value.dns == null ? true : each.value.dns.enabled != null ? each.value.dns.enabled : true
+    local_only = each.value.dns == null ? false : each.value.dns.local_only != null ? each.value.dns.local_only : false
   }
 }
 
@@ -42,15 +43,15 @@ resource "libvirt_volume" "additional" {
 
 data "template_file" "user_data" {
   for_each = var.instances
-  template = file("${path.module}/templates/cloud-config.yaml")
+  template = each.value.bastion ? file("${path.module}/templates/cloud-config-bastion.yaml") : each.value.user_data_template != null ? each.value.user_data_template : file("${path.module}/templates/cloud-config.yaml")
 
   vars = {
     user           = each.value.user != null ? each.value.user : var.user
     groups         = join(",", each.value.groups != null ? each.value.groups : var.groups)
     ssh_public_key = each.value.ssh_public_key != null ? each.value.ssh_public_key : var.ssh_public_key
     hostname       = each.key
-    domain         = var.network.domain
-    root_password  = htpasswd_password.this.sha512
+    # domain         = var.network.domain
+    root_password = htpasswd_password.this.sha512
   }
 }
 
@@ -73,20 +74,22 @@ resource "libvirt_domain" "name" {
   }
 
   dynamic "network_interface" {
-    for_each = each.value.ip_address == null ? [1] : []
+    for_each = { for k, v in each.value.networks : k => v if v.ip_address == null }
+    iterator = network_without_ip
     content {
-      network_id     = libvirt_network.this.id
+      network_id     = libvirt_network.this[network_without_ip.key].id
       wait_for_lease = true
       hostname       = each.key
     }
   }
 
   dynamic "network_interface" {
-    for_each = each.value.ip_address != null ? [1] : []
+    for_each = { for k, v in each.value.networks : k => v if v.ip_address != null }
+    iterator = network_with_ip
     content {
-      network_id     = libvirt_network.this.id
+      network_id     = libvirt_network.this[network_with_ip.key].id
       wait_for_lease = true
-      addresses      = [each.value.ip_address]
+      addresses      = [network_with_ip.value.ip_address]
       hostname       = each.key
     }
   }
@@ -102,4 +105,6 @@ resource "libvirt_domain" "name" {
       volume_id = libvirt_volume.additional[each.key].id
     }
   }
+
+  depends_on = [libvirt_network.this, libvirt_volume.this, libvirt_volume.additional]
 }

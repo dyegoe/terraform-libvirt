@@ -1,15 +1,13 @@
-# Example
+# Bastion example
 
 This is an example on how to use the `terraform-libvirt` module.
 
 This example will create 4 instances with the following names:
 
-- `master`
-- `node1`
-- `node2`
-- `node3`
-
-And it is ready to apply [ansible-k8s-cluster](https://github.com/dyegoe/ansible-k8s-cluster) on it and create a Kubernetes cluster.
+- `bastion`
+- `app1`
+- `app2`
+- `app3`
 
 ## Usage
 
@@ -51,7 +49,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_example"></a> [example](#module\_example) | ../. | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../../. | n/a |
 
 ## Resources
 
