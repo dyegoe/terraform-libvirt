@@ -50,8 +50,8 @@ data "template_file" "user_data" {
     groups         = join(",", each.value.groups != null ? each.value.groups : var.groups)
     ssh_public_key = each.value.ssh_public_key != null ? each.value.ssh_public_key : var.ssh_public_key
     hostname       = each.key
-    # domain         = var.network.domain
-    root_password = htpasswd_password.this.sha512
+    domain         = var.networks[keys(each.value.networks)[0]].domain
+    root_password  = htpasswd_password.this.sha512
   }
 }
 

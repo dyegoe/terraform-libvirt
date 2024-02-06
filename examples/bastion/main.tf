@@ -55,14 +55,15 @@ module "example" {
     }
     "app2" = {
       networks = {
-        private = {}
+        private = { ip_address = "192.168.20.12" }
       }
       user_data_template = file("${path.module}/cloud-config.yaml")
     }
     "app3" = {
       networks = {
-        private = {}
+        private = { ip_address = "192.168.20.13" }
       }
+      user_data_template = file("${path.module}/cloud-config.yaml")
     }
   }
 }

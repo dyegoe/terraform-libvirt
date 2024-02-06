@@ -1,10 +1,14 @@
 #cloud-config
-preserve_hostname: true
 hostname: ${hostname}
-fqdn: ${hostname}.k8s.local
+fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
 packages:
   - qemu-guest-agent
+write_files:
+  - path: /etc/cloud/cloud.cfg.d/99_preserve_hostname.cfg
+    owner: root:root
+    permissions: "0644"
+    content: "preserve_hostname: true"
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]

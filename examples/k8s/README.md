@@ -51,7 +51,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_example"></a> [example](#module\_example) | ../. | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../../. | n/a |
 
 ## Resources
 

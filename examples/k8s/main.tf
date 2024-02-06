@@ -13,7 +13,7 @@ provider "libvirt" {
 }
 
 module "example" {
-  source = "../."
+  source = "../../."
   networks = {
     k8s = {
       mode      = "nat"
@@ -40,14 +40,14 @@ module "example" {
       networks        = { k8s = { ip_address = "10.10.20.10" } }
       additional_disk = false
     }
-    # "node1" = {
-    #   networks = { k8s = { ip_address = "10.10.20.11" } }
-    # }
-    # "node2" = {
-    #   networks = { k8s = { ip_address = "10.10.20.12" } }
-    # }
-    # "node3" = {
-    #   networks = { k8s = { ip_address = "10.10.20.13" } }
-    # }
+    "node1" = {
+      networks = { k8s = { ip_address = "10.10.20.11" } }
+    }
+    "node2" = {
+      networks = { k8s = { ip_address = "10.10.20.12" } }
+    }
+    "node3" = {
+      networks = { k8s = { ip_address = "10.10.20.13" } }
+    }
   }
 }

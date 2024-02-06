@@ -1,9 +1,14 @@
 #cloud-config
-preserve_hostname: true
-hostname: using-user-data
+hostname: ${hostname}
+fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
 packages:
   - qemu-guest-agent
+write_files:
+  - path: /etc/cloud/cloud.cfg.d/99_preserve_hostname.cfg
+    owner: root:root
+    permissions: "0644"
+    content: "preserve_hostname: true"
 bootcmd:
   - [ip, route, add, default, via, "192.168.20.10"]
 runcmd:
