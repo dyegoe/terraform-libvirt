@@ -1,15 +1,13 @@
-# Example
+# Bastion example
 
 This is an example on how to use the `terraform-libvirt` module.
 
 This example will create 4 instances with the following names:
 
-- `master`
-- `node1`
-- `node2`
-- `node3`
-
-And it is ready to apply [ansible-k8s-cluster](https://github.com/dyegoe/ansible-k8s-cluster) on it and create a Kubernetes cluster.
+- `bastion`
+- `app1`
+- `app2`
+- `app3`
 
 ## Usage
 
@@ -51,7 +49,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_example"></a> [example](#module\_example) | ../. | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../../. | n/a |
 
 ## Resources
 
@@ -68,8 +66,7 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_instances_with_additional_disks"></a> [instances\_with\_additional\_disks](#output\_instances\_with\_additional\_disks) | A map of instance names with additional disks to the size of the additional disk in GB. |
-| <a name="output_ip_address"></a> [ip\_address](#output\_ip\_address) | IP address of the instances |
+| <a name="output_ip_addresses"></a> [ip\_addresses](#output\_ip\_addresses) | IP address of the instances |
 | <a name="output_root_password"></a> [root\_password](#output\_root\_password) | A random password for the user root. |
-| <a name="output_ssh_command"></a> [ssh\_command](#output\_ssh\_command) | SSH command to connect to the instance |
 <!-- END_TF_DOCS -->
 <!-- markdownlint-enable MD033 -->

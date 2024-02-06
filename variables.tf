@@ -1,6 +1,5 @@
-variable "network" {
-  type = object({
-    name      = string
+variable "networks" {
+  type = map(object({
     mode      = string
     domain    = string
     addresses = list(string)
@@ -8,14 +7,15 @@ variable "network" {
       enabled    = optional(bool)
       local_only = optional(bool)
     }))
-  })
+  }))
   default = {
-    name      = "example"
-    mode      = "nat"
-    domain    = "example.com"
-    addresses = ["192.168.125.0/24"]
+    example = {
+      mode      = "nat"
+      domain    = "example.com"
+      addresses = ["192.168.125.0/24"]
+    }
   }
-  description = "Network configuration parameters. These are used to create a Libvirt network which will be used by the instances."
+  description = "Networks is a maps of network configuration parameters. Map key is the network name. These are used to create a Libvirt network which will be used by the instances."
 }
 
 variable "user" {
@@ -90,7 +90,11 @@ variable "instances" {
     disk_size            = optional(number)
     additional_disk      = optional(bool)
     additional_disk_size = optional(number)
-    ip_address           = optional(string)
+    bastion              = optional(bool, false)
+    user_data_template   = optional(string)
+    networks = map(object({
+      ip_address = optional(string)
+    }))
   }))
   default     = {}
   description = "A map of instance names to instance configurations. disk_size is in GB."

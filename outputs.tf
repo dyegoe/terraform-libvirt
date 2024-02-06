@@ -1,15 +1,10 @@
-output "ip_address" {
+output "ip_addresses" {
   value = {
-    for instance in libvirt_domain.name : instance.name => instance.network_interface[0].addresses[0]
+    for instance in libvirt_domain.name : instance.name => flatten([
+      for network_interface in instance.network_interface : network_interface.addresses
+    ])
   }
   description = "IP addresses of the instances"
-}
-
-output "ssh_command" {
-  value = {
-    for instance in libvirt_domain.name : instance.name => "ssh ${var.user}@${instance.network_interface[0].addresses[0]}"
-  }
-  description = "SSH commands to connect to the instances"
 }
 
 output "root_password" {

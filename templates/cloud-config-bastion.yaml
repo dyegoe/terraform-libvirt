@@ -4,14 +4,37 @@ fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
 packages:
   - qemu-guest-agent
+  - nftables
 write_files:
   - path: /etc/cloud/cloud.cfg.d/99_preserve_hostname.cfg
     owner: root:root
     permissions: "0644"
     content: "preserve_hostname: true"
+  - path: /etc/sysctl.d/50-ipforward.conf
+    content: net.ipv4.ip_forward=1
+    owner: root:root
+    permissions: "0o644"
+    encoding: text/plain
+    append: false
+    defer: false
+  - path: /etc/sysconfig/nftables.conf
+    content: |
+      table ip nat {
+              chain postrouting {
+                      type nat hook postrouting priority srcnat; policy accept;
+                      oifname "eth1" masquerade
+              }
+      }
+    owner: root:root
+    permissions: "0o600"
+    encoding: text/plain
+    append: false
+    defer: false
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]
+  - [systemctl, enable, --now, --no-block, nftables]
+  - [sysctl, --system]
   - [dnf, -y, upgrade]
 user:
   name: ${user}

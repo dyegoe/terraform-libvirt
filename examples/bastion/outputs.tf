@@ -1,11 +1,6 @@
-output "ip_address" {
-  value       = module.example.ip_address
+output "ip_addresses" {
+  value       = module.example.ip_addresses
   description = "IP address of the instances"
-}
-
-output "ssh_command" {
-  value       = module.example.ssh_command
-  description = "SSH command to connect to the instance"
 }
 
 output "root_password" {
