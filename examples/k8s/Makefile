@@ -1,4 +1,4 @@
-include ../.makefiles/*.mk
+include ../../.makefiles/*.mk
 
 ENV_NAME = examples
 ENV_MSG = examples
