@@ -7,6 +7,7 @@ variable "networks" {
       enabled    = optional(bool)
       local_only = optional(bool)
     }))
+    dnsmasq_server = optional(string)
   }))
   default = {
     example = {
