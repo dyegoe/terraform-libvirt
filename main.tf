@@ -8,6 +8,15 @@ resource "libvirt_network" "this" {
     enabled    = each.value.dns == null ? true : each.value.dns.enabled != null ? each.value.dns.enabled : true
     local_only = each.value.dns == null ? false : each.value.dns.local_only != null ? each.value.dns.local_only : false
   }
+  dnsmasq_options {
+    dynamic "options" {
+      for_each = each.value.dnsmasq_server != null ? ["server"] : []
+      content {
+        option_name  = "server"
+        option_value = each.value.dnsmasq_server
+      }
+    }
+  }
 }
 
 resource "random_password" "this" {
