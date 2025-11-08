@@ -21,13 +21,13 @@ variable "networks" {
 
 variable "user" {
   type        = string
-  default     = "ubuntu"
+  default     = "user"
   description = "The user to create on the instances."
 }
 
 variable "groups" {
   type        = list(string)
-  default     = ["users", "admin"]
+  default     = ["wheel"]
   description = "The groups to add the user to."
 }
 

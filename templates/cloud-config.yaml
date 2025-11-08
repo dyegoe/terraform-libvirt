@@ -2,6 +2,7 @@
 hostname: ${hostname}
 fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
+package_upgrade: true
 packages:
   - qemu-guest-agent
 write_files:
@@ -12,7 +13,6 @@ write_files:
 runcmd:
   - [systemctl, daemon-reload]
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]
-  - [dnf, -y, upgrade]
 user:
   name: ${user}
   sudo: ALL=(ALL) NOPASSWD:ALL

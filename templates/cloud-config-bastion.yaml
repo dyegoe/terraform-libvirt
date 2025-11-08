@@ -2,6 +2,7 @@
 hostname: ${hostname}
 fqdn: ${hostname}.${domain}
 manage_etc_hosts: true
+package_upgrade: true
 packages:
   - qemu-guest-agent
   - nftables
@@ -35,7 +36,6 @@ runcmd:
   - [systemctl, enable, --now, --no-block, qemu-guest-agent]
   - [systemctl, enable, --now, --no-block, nftables]
   - [sysctl, --system]
-  - [dnf, -y, upgrade]
 user:
   name: ${user}
   sudo: ALL=(ALL) NOPASSWD:ALL
